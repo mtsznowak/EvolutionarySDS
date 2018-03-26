@@ -1,6 +1,7 @@
 package pl.agenty;
 import org.uma.jmetal.solution.DoubleSolution;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -11,28 +12,27 @@ public class DoubleSDS implements SDSOperator<DoubleSolution> {
 
 
     public DoubleSDS(int iterations) {
-        this.iterations = 1;
+        this.iterations = iterations;
         this.randomGenerator = new Random();
     }
 
     public List<DoubleSolution> execute(List<DoubleSolution> population) {
+
         for (int it = 0; it < this.iterations; it++) {
             Double averageObjective = calculateAverageObjective(population);
+            List<DoubleSolution> new_population = new ArrayList<DoubleSolution>();
 
             for (DoubleSolution s : population) {
+                int randomIndex = this.randomGenerator.nextInt(population.size());
+                DoubleSolution randomSolution = population.get(randomIndex);
 
-                if(s.getObjective(0) < averageObjective) {
-                    int randomIndex = this.randomGenerator.nextInt(population.size());
-                    DoubleSolution randomSolution = population.get(randomIndex);
-
-                    if(randomSolution.getObjective(0) > averageObjective) {
-                        for (int k = 0; k < s.getNumberOfVariables(); k++) {
-                            s.setVariableValue(k, randomSolution.getVariableValue(k));
-                        }
-                    }
+                if(s.getObjective(0) > averageObjective && randomSolution.getObjective(0) < averageObjective) {
+                    new_population.add((DoubleSolution)randomSolution.copy());
+                } else {
+                    new_population.add((DoubleSolution)s.copy());
                 }
             }
-
+            population = new_population;
         }
 
         return population;

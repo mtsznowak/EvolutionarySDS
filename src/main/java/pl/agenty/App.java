@@ -48,9 +48,9 @@ public class App extends NSGAIIRunner {
 
         selection = new BinaryTournamentSelection<DoubleSolution>(new RankingAndCrowdingDistanceComparator<DoubleSolution>());
 
-        SDSOperator<DoubleSolution> sdsOperator = new DoubleSDS(1);
+        SDSOperator<DoubleSolution> sdsOperator = new DoubleSDS(3);
 
-        algorithm = new EvolutionarySDS(problem, maxEvaluations, populationSize, sdsOperator, crossover, mutation, selection, evaluator);
+        algorithm = new EvolutionarySDS(problem, 2 * maxEvaluations, populationSize, sdsOperator, crossover, mutation, selection, evaluator);
 //        algorithm = new NSGAII(problem, maxEvaluations, populationSize, crossover, mutation, selection, evaluator);
 
         AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
