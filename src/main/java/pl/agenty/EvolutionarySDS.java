@@ -1,20 +1,19 @@
 package pl.agenty;
 
-import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAII;
+import org.uma.jmetal.algorithm.singleobjective.geneticalgorithm.SteadyStateGeneticAlgorithm;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 
 import java.util.List;
 
-public class EvolutionarySDS<S extends Solution<?>> extends NSGAII<S> {
+public class EvolutionarySDS<S extends Solution<?>> extends SteadyStateGeneticAlgorithm<S> {
     private SDSOperator<S> sdsOperator;
 
-    public EvolutionarySDS(Problem<S> problem, int maxEvaluations, int populationSize, SDSOperator<S> sdsOperator, CrossoverOperator<S> crossoverOperator, MutationOperator<S> mutationOperator, SelectionOperator<List<S>, S> selectionOperator, SolutionListEvaluator<S> evaluator) {
-        super(problem, maxEvaluations, populationSize, crossoverOperator, mutationOperator, selectionOperator, evaluator);
+    public EvolutionarySDS(Problem<S> problem, int maxEvaluations, int populationSize, SDSOperator<S> sdsOperator, CrossoverOperator<S> crossoverOperator, MutationOperator<S> mutationOperator, SelectionOperator<List<S>, S> selectionOperator) {
+        super(problem, maxEvaluations, populationSize, crossoverOperator, mutationOperator, selectionOperator);
         this.sdsOperator = sdsOperator;
     }
 
