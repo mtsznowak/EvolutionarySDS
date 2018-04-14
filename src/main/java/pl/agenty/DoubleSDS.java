@@ -1,6 +1,5 @@
 package pl.agenty;
 import org.uma.jmetal.solution.DoubleSolution;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -8,12 +7,14 @@ import java.util.Random;
 
 public class DoubleSDS implements SDSOperator<DoubleSolution> {
     private int iterations;
+    private double sdsFactor;
     private Random randomGenerator;
 
 
     public DoubleSDS(int iterations) {
         this.iterations = iterations;
         this.randomGenerator = new Random();
+        this.sdsFactor = 0.5;
     }
 
     public List<DoubleSolution> execute(List<DoubleSolution> population) {
@@ -27,7 +28,13 @@ public class DoubleSDS implements SDSOperator<DoubleSolution> {
                 DoubleSolution randomSolution = population.get(randomIndex);
 
                 if(s.getObjective(0) > averageObjective && randomSolution.getObjective(0) < averageObjective) {
-                    new_population.add((DoubleSolution)randomSolution.copy());
+                    DoubleSolution new_individual = (DoubleSolution)s.copy();
+
+                    for(int i=0; i<s.getNumberOfVariables(); i++) {
+                        Double new_value = (randomSolution.getVariableValue(i) * sdsFactor + s.getVariableValue(i) * (1 - sdsFactor));
+                        new_individual.setVariableValue(i, new_value);
+                    }
+                    new_population.add(new_individual);
                 } else {
                     new_population.add((DoubleSolution)s.copy());
                 }

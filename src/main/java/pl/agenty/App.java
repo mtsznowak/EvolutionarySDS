@@ -46,7 +46,7 @@ public class App extends NSGAIIRunner {
         SDSOperator<DoubleSolution> sdsOperator = new DoubleSDS(3);
 
 //        algorithm = new SteadyStateGeneticAlgorithm(problem, maxEvaluations, populationSize, crossover, mutation, selection);
-        algorithm = new EvolutionarySDS(problem, 2 * maxEvaluations, populationSize, sdsOperator, crossover, mutation, selection);
+        algorithm = new EvolutionarySDS(problem, maxEvaluations, populationSize, sdsOperator, crossover, mutation, selection);
 
         AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
                 .execute();
@@ -56,7 +56,5 @@ public class App extends NSGAIIRunner {
 
         JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
         JMetalLogger.logger.info("Best individual objective: " + individual.getObjective(0));
-//        printFinalSolutionSet(population);
-
     }
 }
