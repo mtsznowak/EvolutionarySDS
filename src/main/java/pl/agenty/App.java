@@ -1,7 +1,6 @@
 package pl.agenty;
 
 import org.uma.jmetal.algorithm.Algorithm;
-import org.uma.jmetal.algorithm.singleobjective.geneticalgorithm.SteadyStateGeneticAlgorithm;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;
@@ -45,8 +44,8 @@ public class App extends NSGAIIRunner {
 
         SDSOperator<DoubleSolution> sdsOperator = new DoubleSDS(3);
 
-//        algorithm = new SteadyStateGeneticAlgorithm(problem, maxEvaluations, populationSize, crossover, mutation, selection);
-        algorithm = new EvolutionarySDS(problem, maxEvaluations, populationSize, sdsOperator, crossover, mutation, selection);
+        algorithm = new MeasurableSteadyStateGeneticAlgorithm(problem, maxEvaluations, populationSize, crossover, mutation, selection);
+//        algorithm = new EvolutionarySDS(problem, maxEvaluations, populationSize, sdsOperator, crossover, mutation, selection);
 
         AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
                 .execute();
