@@ -9,11 +9,11 @@ import org.uma.jmetal.solution.Solution;
 
 import java.util.List;
 
-public class EvolutionarySDS<S extends Solution<?>> extends SteadyStateGeneticAlgorithm<S> {
+public class EvolutionarySDS<S extends Solution<?>> extends MeasurableSteadyStateGeneticAlgorithm<S> {
     private SDSOperator<S> sdsOperator;
 
-    public EvolutionarySDS(Problem<S> problem, int maxEvaluations, int populationSize, SDSOperator<S> sdsOperator, CrossoverOperator<S> crossoverOperator, MutationOperator<S> mutationOperator, SelectionOperator<List<S>, S> selectionOperator) {
-        super(problem, maxEvaluations, populationSize, crossoverOperator, mutationOperator, selectionOperator);
+    public EvolutionarySDS(Problem<S> problem, long maxTime, int populationSize, SDSOperator<S> sdsOperator, CrossoverOperator<S> crossoverOperator, MutationOperator<S> mutationOperator, SelectionOperator<List<S>, S> selectionOperator) {
+        super(problem, maxTime, populationSize, crossoverOperator, mutationOperator, selectionOperator);
         this.sdsOperator = sdsOperator;
     }
 

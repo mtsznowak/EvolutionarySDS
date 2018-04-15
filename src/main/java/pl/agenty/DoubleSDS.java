@@ -11,10 +11,11 @@ public class DoubleSDS implements SDSOperator<DoubleSolution> {
     private Random randomGenerator;
 
 
-    public DoubleSDS(int iterations) {
+    public DoubleSDS(int iterations, double sdsFactor) {
         this.iterations = iterations;
+        this.sdsFactor = sdsFactor;
+
         this.randomGenerator = new Random();
-        this.sdsFactor = 0.5;
     }
 
     public List<DoubleSolution> execute(List<DoubleSolution> population) {
