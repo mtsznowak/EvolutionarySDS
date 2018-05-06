@@ -8,6 +8,7 @@ import java.util.Random;
 public class DoubleSDS implements SDSOperator<DoubleSolution> {
     private int iterations;
     private double sdsFactor;
+
     private Random randomGenerator;
 
 
@@ -19,31 +20,36 @@ public class DoubleSDS implements SDSOperator<DoubleSolution> {
     }
 
     public List<DoubleSolution> execute(List<DoubleSolution> population) {
+        List<DoubleSolution> new_population = new ArrayList<DoubleSolution>();
+        for (DoubleSolution s : population) {
+            new_population.add((DoubleSolution)s.copy());
+        }
 
         for (int it = 0; it < this.iterations; it++) {
-            Double averageObjective = calculateAverageObjective(population);
-            List<DoubleSolution> new_population = new ArrayList<DoubleSolution>();
+            Double averageObjective = calculateAverageObjective(new_population);
 
-            for (DoubleSolution s : population) {
+            for (DoubleSolution s : new_population) {
                 int randomIndex = this.randomGenerator.nextInt(population.size());
                 DoubleSolution randomSolution = population.get(randomIndex);
 
                 if(s.getObjective(0) > averageObjective && randomSolution.getObjective(0) < averageObjective) {
-                    DoubleSolution new_individual = (DoubleSolution)s.copy();
-
                     for(int i=0; i<s.getNumberOfVariables(); i++) {
                         Double new_value = (randomSolution.getVariableValue(i) * sdsFactor + s.getVariableValue(i) * (1 - sdsFactor));
-                        new_individual.setVariableValue(i, new_value);
+                        s.setVariableValue(i, new_value);
                     }
-                    new_population.add(new_individual);
-                } else {
-                    new_population.add((DoubleSolution)s.copy());
                 }
             }
-            population = new_population;
         }
 
-        return population;
+        return new_population;
+    }
+
+    public void setIterations(int iterations) {
+        this.iterations = iterations;
+    }
+
+    public void setSdsFactor(double sdsFactor) {
+        this.sdsFactor = sdsFactor;
     }
 
     private double calculateAverageObjective(List<DoubleSolution> population) {
